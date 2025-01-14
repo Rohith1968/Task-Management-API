@@ -174,36 +174,5 @@ Authorization: Bearer <your-jwt-token>
 ]
 ```
 
----
 
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add your message here"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. Open a Pull Request.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-## Contact
-
-For any inquiries or support, please contact [your email].
 
