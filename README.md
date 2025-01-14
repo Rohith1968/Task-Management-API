@@ -2,77 +2,105 @@
 
 ## Overview
 
-This is a RESTful API for managing tasks, built using Flask and MySQL. It supports creating, reading, updating, and deleting tasks, while ensuring secure access with JWT authentication. The API allows users to store tasks, track their status (Pending/Completed), and set due dates. 
+The **Task Management API** is a RESTful service built using Flask and MySQL to efficiently manage tasks. It supports features like task creation, retrieval, updates, and deletion. Secure access is ensured via JWT authentication. The API allows users to organize their tasks with fields like title, description, status (Pending/Completed), and due dates.
 
 ## Features
 
-- CRUD Operations: Create, Read, Update, and Delete tasks.
-- JWT Authentication: Secure access for users.
-- MySQL Database: Stores tasks with fields like Title, Description, Status, and Due Date.
-- Filtering and Sorting: Filter tasks by status and sort by due date.
-- Dockerization: Containerized application for easy deployment.
+- **CRUD Operations**: Create, Read, Update, and Delete tasks.
+- **JWT Authentication**: Secure endpoints to protect user data.
+- **MySQL Integration**: Persistent storage for tasks.
+- **Filtering & Sorting**: Filter tasks by status and sort them by due date.
+- **Docker Support**: Simplified deployment with containerization.
 
-## Requirements
+## Prerequisites
 
-- Python 3.x
-- MySQL
-- Docker (optional)
+- **Python**: Version 3.x
+- **MySQL**: Database server
+- **Docker**: Optional for containerized deployment
+
+---
 
 ## Setup Instructions
 
 ### 1. Clone the Repository
+```bash
 git clone https://github.com/yourusername/task-management-api.git
 cd task-management-api
+```
 
+### 2. Install Dependencies
 
-2. Install Dependencies
-First, create and activate a virtual environment (optional but recommended):
-
+#### Create and activate a virtual environment (optional):
+```bash
 python3 -m venv venv
-source venv\Scripts\activate  
+source venv/bin/activate  # On Windows, use venv\Scripts\activate
+```
 
-Then, install the required Python libraries:
+#### Install required packages:
+```bash
 pip install -r requirements.txt
+```
 
-3. Configure MySQL Database
-Create a MySQL database and user for the application. In the .env file, update the MySQL connection details:
+### 3. Configure the MySQL Database
 
+1. Create a MySQL database for the application:
+   ```sql
+   CREATE DATABASE task_management;
+   ```
+2. Update the `.env` file with your database credentials:
+   ```
+   MYSQL_HOST=localhost
+   MYSQL_USER=root
+   MYSQL_PASSWORD=Saisri@1968
+   MYSQL_DATABASE=task_management
+   JWT_SECRET_KEY=S3cUr3K3yF0rJWT!
+   ```
 
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=Saisri@1968
-MYSQL_DATABASE=task_management
-JWT_SECRET_KEY=S3cUr3K3yF0rJWT!
+### 4. Run Database Migrations
+When you start the application for the first time, it will automatically create the required tables in your database.
 
-4. Run Database Migrations
-The application uses SQLAlchemy for database interaction. The first time you run the application, it will automatically create the necessary tables.
-
-5. Run the API
-Run the application locally:
+### 5. Run the Application
+Start the API server locally:
+```bash
 python src/routes/routes.py
-By default, the API will be available at http://localhost:5000.
+```
+The API will be available at [http://localhost:5000](http://localhost:5000).
 
-6. Test the API
-Once the application is running, you can test it using a tool like Postman or Swagger UI. Make sure to include a Bearer token when making requests to protected endpoints.
+### 6. Test the API
+Use tools like **Postman** or **Swagger UI** to interact with the API. Include a Bearer token in requests to protected endpoints.
 
-API Documentation
-POST /tasks: Create a new task
-GET /tasks: Retrieve all tasks
-GET /tasks/:id: Retrieve a specific task by ID
-PUT /tasks/:id: Update a task
-DELETE /tasks/:id: Delete a task
-Sample Request
-Create Task (POST)
+---
 
-Request body:
+## API Documentation
+
+### Endpoints
+
+#### Task Management
+- **POST /tasks**: Create a new task.
+- **GET /tasks**: Retrieve all tasks.
+- **GET /tasks/:id**: Retrieve a specific task by ID.
+- **PUT /tasks/:id**: Update an existing task.
+- **DELETE /tasks/:id**: Delete a task.
+
+#### Authentication
+- **POST /login**: Authenticate and generate a JWT token.
+
+### Sample Request
+
+#### Create a Task (POST `/tasks`)
+
+**Request Body:**
+```json
 {
   "title": "Finish API Documentation",
   "description": "Complete the API documentation for the Task Management System.",
   "status": "Pending",
   "dueDate": "2025-01-20"
 }
+```
 
-Response:
+**Response:**
+```json
 {
   "message": "Task created successfully",
   "task": {
@@ -83,20 +111,99 @@ Response:
     "due_date": "2025-01-20"
   }
 }
+```
 
-Docker Usage
-If you prefer to run the API inside a Docker container, follow these steps:
+---
 
-1. Build the Docker Image
-docker build -t task-api
+## Docker Instructions
 
-2. Run the Docker Container
+### 1. Build the Docker Image
+```bash
+docker build -t task-api .
+```
 
+### 2. Run the Docker Container
+```bash
 docker run -p 5000:5000 task-api
-The application will be available at http://localhost:5000.
+```
+The application will now be accessible at [http://localhost:5000](http://localhost:5000).
 
-JWT Authentication
-To access protected routes, you need to generate a JWT token.
-Use the login endpoint (POST /login) to authenticate and obtain a token.
-Add the token to the Authorization header of your requests as a Bearer token.
+---
+
+## JWT Authentication
+
+To access protected routes:
+
+1. **Login to Generate a Token:**
+   - Use the `/login` endpoint with valid credentials to obtain a JWT token.
+   - Example:
+     ```json
+     {
+       "username": "user1",
+       "password": "securepassword"
+     }
+     ```
+
+2. **Include the Token in Requests:**
+   - Add the token to the `Authorization` header as a Bearer token.
+     ```
+     Authorization: Bearer <your-jwt-token>
+     ```
+
+---
+
+## Example Usage
+
+### Fetch All Tasks (GET `/tasks`)
+
+**Request Header:**
+```http
+Authorization: Bearer <your-jwt-token>
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Finish API Documentation",
+    "description": "Complete the API documentation for the Task Management System.",
+    "status": "Pending",
+    "due_date": "2025-01-20"
+  }
+]
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a Pull Request.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## Contact
+
+For any inquiries or support, please contact [your email].
 
